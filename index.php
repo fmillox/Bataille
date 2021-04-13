@@ -3,20 +3,31 @@
 require_once('./vendor/autoload.php');
 
 use App\Classes\Card;
+use App\Classes\Deck;
 
-$card = new Card(10);
-echo ($card->toString() === '10')."\n";
+$deck = new Deck();
+echo 'Deck is empty : '.($deck->isEmpty() === true)."\n\n";
 
-$card1 = new Card(100);
-$card2 = new Card(100);
-echo ($card1->compareTo($card2) === 0)."\n";
+$cards = [];
+for ($i = 1; $i <= 52; $i++) {
+  $cards[] = new Card($i);
+}
+$deck = new Deck($cards);
+echo 'Création du jeu de cartes : '."\n".$deck->toString()."\n\n";
 
-$card1 = new Card(100);
-$card2 = new Card(101);
-echo ($card1->compareTo($card2) === -1)."\n";
+echo 'Deck is not empty : '.($deck->isEmpty() === false)."\n\n";
 
-$card1 = new Card(101);
-$card2 = new Card(100);
-echo ($card1->compareTo($card2) === 1)."\n";
+$deck->shuffle();
+echo 'Mélange du jeu de cartes : '."\n".$deck->toString()."\n\n";
 
+$deck->cut();
+echo 'Coupe du jeu de cartes : '."\n".$deck->toString()."\n\n";
+
+echo 'Première carte : '.$deck->getFirstCard()->toString()."\n\n";
+
+$deck->addCard(new Card(1000));
+echo 'Nouvelle carte ajoutée : '."\n".$deck->toString()."\n\n";
+
+echo $deck->removeCard($deck->getFirstCard())->toString()."\n";
+echo 'Première carte retirée : '."\n".$deck->toString()."\n\n";
 ?>

@@ -31,8 +31,10 @@ class Card
   {
     if ($this->value > $card->getValue()) {
       return 1;
+
     } elseif ($this->value < $card->getValue()) {
       return -1;
+      
     } else {
       return 0;
     }
