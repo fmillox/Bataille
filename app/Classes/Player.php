@@ -80,6 +80,31 @@ class Player
   }
 
   /**
+   * Show the first card of the deck of the player
+   *
+   * @param integer $isCardRemovedOutOfDeck Boolean to indicate if the card has to be removed out of the deck (default, true)
+   * @return bool|Card
+   */
+  public function showFirstCardOfDeck(bool $isCardRemovedOutOfDeck = true)
+  {
+    $card = $this->deck->getFirstCard();
+    if (is_bool($card)) {
+      return false;
+    }
+
+    if ($isCardRemovedOutOfDeck) {
+      $card = $this->deck->removeCard($card);
+      if (is_bool($card)) {
+        return false;
+      }
+    }
+    
+    $this->visibleCard = $card;
+    
+    return $card;
+  }
+
+  /**
    * Reset the visible card
    *
    * @return void
@@ -94,7 +119,7 @@ class Player
    *
    * @return boolean
    */
-  private function isCardVisible()
+  public function isCardVisible()
   {
     return $this->visibleCard !== null;
   }
@@ -138,20 +163,6 @@ class Player
   public function getVisibleCard()
   {
     return $this->visibleCard;
-  }
-
-  /**
-   * Set the value of visibleCard
-   *
-   * @param  Card  $visibleCard
-   *
-   * @return  self
-   */ 
-  public function setVisibleCard(?Card $visibleCard)
-  {
-    $this->visibleCard = $visibleCard;
-
-    return $this;
   }
 
   /**
